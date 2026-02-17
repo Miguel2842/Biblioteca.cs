@@ -196,7 +196,7 @@ namespace BibliotecaSimple
 
 
 
-            Console.WriteLine("Ejecute el programa otra vez y verá que el libro sigue guardado");
+            Console.WriteLine("Datos guardados");
 
 
             Console.ReadLine();
