@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.IO;
 
@@ -63,7 +62,7 @@ namespace BibliotecaSimple
 
                     GuardarLibros();
 
-                    Console.WriteLine("Libro prestado a usuario " + idUsuario);
+                    Console.WriteLine("Libro prestado correctamente");
                     return;
                 }
             }
@@ -83,7 +82,7 @@ namespace BibliotecaSimple
 
                     GuardarLibros();
 
-                    Console.WriteLine("Libro devuelto");
+                    Console.WriteLine("Libro devuelto correctamente");
                     return;
                 }
             }
@@ -93,7 +92,6 @@ namespace BibliotecaSimple
 
 
 
-        
         public void GuardarLibros()
         {
             StreamWriter writer = new StreamWriter(archivo);
@@ -112,7 +110,6 @@ namespace BibliotecaSimple
 
 
 
-        
         public void CargarLibros()
         {
             if (File.Exists(archivo))
@@ -140,12 +137,17 @@ namespace BibliotecaSimple
 
 
 
-        
         public void MostrarLibros()
         {
+            Console.WriteLine("\nLISTA DE LIBROS:");
+
             foreach (Libro l in Libros)
             {
-                Console.WriteLine(l.Titulo + " - " + l.ISBN + " - Disponible: " + l.Disponible);
+                Console.WriteLine(
+                    "Titulo: " + l.Titulo +
+                    " | ISBN: " + l.ISBN +
+                    " | Disponible: " + l.Disponible
+                );
             }
         }
 
@@ -161,19 +163,13 @@ namespace BibliotecaSimple
 
             Biblioteca b = new Biblioteca();
 
-
-            
             b.CargarLibros();
-
-
 
             Usuario usuario1 = new Usuario(1, "Miguel");
 
             b.AgregarUsuario(usuario1);
 
 
-
-            
             if (b.Libros.Count == 0)
             {
                 Libro libro1 = new Libro
@@ -187,20 +183,54 @@ namespace BibliotecaSimple
 
 
 
-            b.MostrarLibros();
+            int opcion;
+
+            do
+            {
+                Console.WriteLine("\n=== SISTEMA DE BIBLIOTECA ===");
+                Console.WriteLine("1. Mostrar libros");
+                Console.WriteLine("2. Prestar libro");
+                Console.WriteLine("3. Devolver libro");
+                Console.WriteLine("4. Salir");
+                Console.Write("Seleccione una opcion: ");
+
+                opcion = int.Parse(Console.ReadLine());
 
 
-            b.PrestarLibro("978-6070935299", 1);
+                if (opcion == 1)
+                {
+                    b.MostrarLibros();
+                }
+                else if (opcion == 2)
+                {
+                    Console.Write("Ingrese ISBN del libro: ");
 
-            b.DevolverLibro("978-6070935299");
+                    string isbn = Console.ReadLine();
+
+                    b.PrestarLibro(isbn, 1);
+                }
+                else if (opcion == 3)
+                {
+                    Console.Write("Ingrese ISBN del libro: ");
+
+                    string isbn = Console.ReadLine();
+
+                    b.DevolverLibro(isbn);
+                }
+
+            }
+
+            while (opcion != 4);
 
 
 
-            Console.WriteLine("Datos guardados");
-
+            Console.WriteLine("Programa finalizado");
 
             Console.ReadLine();
 
         }
     }
+}
+
+
   
